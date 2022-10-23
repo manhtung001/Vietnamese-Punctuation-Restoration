@@ -2,6 +2,7 @@ import streamlit as st
 import docx2txt
 import os
 import shutil
+import utils
 
 st.set_page_config(
     page_title="Vietnamese Punctuation Restoration", page_icon="📊", initial_sidebar_state="expanded"
@@ -45,7 +46,12 @@ if st.button('Predict'):
     result = dict()
     if text_input.strip() != "":
         print("model predict on text_input")
-        result["text_input"] = text_input
+        txt = utils.preprocessing(text_input)
+        txt = utils.inference(txt)
+        txt = txt.replace("_", " ")
+        txt = txt[:-1]
+        result["Result of Text to translate"] = txt
+        # result["text_input"] = text_input
     if uploaded_file is not None:
         file_location = f"tmp/{uploaded_file.name}"
         with open(file_location, "wb+") as file_object:
@@ -55,7 +61,12 @@ if st.button('Predict'):
         print("text_uploaded_file")
         print(text_uploaded_file)
         print("model predict on uploaded_file")
-        result["uploaded_file"] = text_uploaded_file
+        txt = utils.preprocessing(text_uploaded_file)
+        txt = utils.inference(txt)
+        txt = txt.replace("_", " ")
+        txt = txt[:-1]
+        result["Result of Upload document"] = txt
+        # result["uploaded_file"] = text_uploaded_file
 
     for key, value in result.items():
         st.write(key)
