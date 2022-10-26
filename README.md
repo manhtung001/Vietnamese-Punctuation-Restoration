@@ -11,7 +11,9 @@ output: Là nhà phát triển bất động sản quốc tế với nhiều d�
 ## How to test this app
 
 ### Requirements
-
+```
+python==3.7
+```
 ```
 streamlit==1.6
 numpy==1.19.5
